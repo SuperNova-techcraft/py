@@ -45,7 +45,7 @@ while True:
                         player_l.x += 100
                         time.sleep(1)
                         s_done = True
-        if event.key == pygame.K.q:
+        if event.key == pygame.K_q:
             s_done = False
 
 #muovimenti
