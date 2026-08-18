@@ -17,8 +17,9 @@ s_u = False # verifica che il personaggio guarda sopra
 ss_l = False #verifica che lultimo input era a o d
 ss_u = False #verifica che lultimo input era w o s
 s_done = False #verifica se il giocatore ha sprintato
+
+
 while True:
-    window.fill("#15191f")
     window.blit(bkg, (0, 0))
     if(ss_l == False):
         pygame.draw.rect(window, "red", player)
@@ -30,24 +31,77 @@ while True:
             exit()
 
 
-#sprint
+#sprint:
+
+    #sprint up
+    if event.type == pygame.KEYUP:
+        if event.key == pygame.K_UP:
+            if s_done == False:
+                if player.y >= 100:  
+                    player.y -= 100
+                    player_l.y -= 100
+                    s_done = True
+                else:  
+                    player.y -= player.y
+                    player_l.y -= player_l.y
+                    s_done = True
     if event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_e:
-            if (ss_l == True):
-                if(s_l == True):
-                    if(s_done == False):
+        if event.key == pygame.K_UP:
+            s_done = False
+
+    #sprint left
+    if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                if s_done == False:
+                    if player.x >= 100:  
                         player.x -= 100
                         player_l.x -= 100
                         s_done = True
-                if(s_l == False):
-                    if(s_done == False):
-                        player.x += 100
-                        player_l.x += 100
-                        time.sleep(1)
+                    else:  
+                        player.x -= player.x
+                        player_l.x -= player_l.x
                         s_done = True
-        if event.key == pygame.K_q:
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_LEFT:
             s_done = False
 
+    #sprint right
+    if event.type == pygame.KEYUP:
+        if event.key == pygame.K_RIGHT:
+            if s_done == False:
+                if player.x + 100 <= 1000:  
+                    player.x += 100
+                    player_l.x += 100
+                    s_done = True
+                else:  
+                # Se lo supera, blocca entrambi gli oggetti esattamente a 1000
+                    player.x = 1000 - 25
+                    player_l.x = 1000 - 25
+                    s_done = True
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_RIGHT:
+            s_done = False
+
+    #sprint down
+    if event.type == pygame.KEYUP:
+            if event.key == pygame.K_DOWN:
+                if s_done == False:
+                    if player.y + 100 <= 600:  
+                        player.y += 100
+                        player_l.y += 100
+                        s_done = True
+                    else:  
+                    # Se lo supera, blocca entrambi gli oggetti esattamente a 1000
+                        player.y = 600 - 25
+                        player_l.y = 600 - 25
+                        s_done = True
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_DOWN:
+            s_done = False
+
+    if player.x > 1000:
+        player.x = 1000
+        player_l.x = 1000
 #muovimenti
     kes = pygame.key.get_pressed()
     if kes[pygame.K_w] and (player and player_l).y - 10 >= 0 :
