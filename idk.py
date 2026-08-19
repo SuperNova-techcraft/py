@@ -10,15 +10,28 @@ bkg = pygame.image.load("img/bkg.png")
 pygame.display.set_caption("SN-  PyGame")  # name on upbar
 clock = pygame.time.Clock()
 
-pygame.mixer.music.load("music/Creo_Crazy.mp3")
+# --- MODIFICA 1: Rimosso il load da qui per evitare il blocco all'avvio ---
 
 player = pygame.Rect(200, 300, 20, 25)  # player quando punta sopra o sotto
-player_l = pygame.Rect(200, 300, 25, 20) # player quando punta a destra o sinistra
+player_l = pygame.Rect(200, 300, 25, 20) #player quando punta a destra o sinistra
 
-# attacchi
+#attacchi
 atck_1 = pygame.Rect (0, 300, 1000, 100)
 atck_2 = pygame.Rect (0, 100, 1000, 100)
-atck_3 = pygame.Rect (0, 400, 1000, 100)
+atck_3 = pygame.Rect (0, 500, 1000, 100)
+atck_4 = pygame.Rect (0, 0, 1000, 100)
+atck_5 = pygame.Rect (0, 200, 1000, 100)
+atck_6 = pygame.Rect (0, 400, 1000, 100)
+atck_1_v = pygame.Rect (0, 0, 100, 600)
+atck_2_v = pygame.Rect (0, 100, 100, 600)
+atck_3_v = pygame.Rect (0, 200, 100, 600)
+atck_4_v = pygame.Rect (0, 300, 100, 600)
+atck_5_v = pygame.Rect (0, 400, 100, 600)
+atck_6_v = pygame.Rect (0, 500, 100, 600)
+atck_7_v = pygame.Rect (0, 600, 100, 600)
+atck_8_v = pygame.Rect (0, 700, 100, 600)
+atck_9_v = pygame.Rect (0, 800, 100, 600)
+atck_10_v = pygame.Rect (0, 900, 100, 600)
 
 s_l = False  
 s_u = False  
@@ -26,13 +39,20 @@ ss_l = False
 ss_u = False  
 s_done = False  
 
-# --- CONFIGURAZIONE TIMER E ATTACCHI ---
 EVENTO_CANCELLA_ATTACCO_1 = pygame.USEREVENT + 1
 EVENTO_CANCELLA_ATTACCO_2 = pygame.USEREVENT + 2
 evento_del_atc_3 = pygame.USEREVENT + 3
 evento_del_atc_3_l = pygame.USEREVENT + 4
 evento_del_atc_3_t = pygame.USEREVENT + 5
 evento_del_atc_3_t_h = pygame.USEREVENT + 6
+s_atc = pygame.USEREVENT + 7
+s_atc_h = pygame.USEREVENT + 8
+s_atc_h_del = pygame.USEREVENT + 9
+s_1 = pygame.USEREVENT + 10
+s_2 = pygame.USEREVENT + 11
+s_3 = pygame.USEREVENT + 12
+s_4 = pygame.USEREVENT + 13
+s_5 = pygame.USEREVENT + 14
 
 # Variabili di stato per decidere se mostrare gli attacchi sullo schermo
 mostra_attacco1 = False
@@ -41,6 +61,43 @@ sh_atc3 = False
 sh_atc3_h = False
 sh_atc3_t = False
 sh_atc3_t_h = False
+
+sh_atc_1 = False
+sh_atc_2 = False
+sh_atc_3 = False
+sh_atc_4 = False
+sh_atc_5 = False
+sh_atc_6 = False
+sh_atc_v_1 = False
+sh_atc_v_2 = False
+sh_atc_v_3 = False
+sh_atc_v_4 = False
+sh_atc_v_5 = False
+sh_atc_v_6 = False
+sh_atc_v_7 = False
+sh_atc_v_8 = False
+sh_atc_v_9 = False
+sh_atc_v_10 = False
+
+
+sh_atc_h_1 = False
+sh_atc_h_2 = False
+sh_atc_h_3 = False
+sh_atc_h_4 = False
+sh_atc_h_5 = False
+sh_atc_h_6 = False
+sh_atc_h_v_1 = False
+sh_atc_h_v_2 = False
+sh_atc_h_v_3 = False
+sh_atc_h_v_4 = False
+sh_atc_h_v_5 = False
+sh_atc_h_v_6 = False
+sh_atc_h_v_7 = False
+sh_atc_h_v_8 = False
+sh_atc_h_v_9 = False
+sh_atc_h_v_10 = False
+
+
 
 # life
 vite = 3
@@ -53,6 +110,11 @@ intensita_shake = 6
 
 font = pygame.font.SysFont(None, 30)
 font_grande = pygame.font.SysFont(None, 50)
+
+# --- MODIFICA 2: Forza un primo disegno pulito prima del ciclo per evitare lo schermo nero ---
+window.blit(bkg, (0, 0))
+pygame.draw.rect(window, "red", player)
+pygame.display.update()
 
 while True:
     # shake
@@ -78,6 +140,8 @@ while True:
                 pygame.draw.rect(window, "red", rect_disegno_l)
 
     # atck
+
+    
     if mostra_attacco1:
         atck_1_disegno = atck_1.move(shake_x, shake_y)
         pygame.draw.rect(window, (71, 27, 24), atck_1_disegno)
@@ -102,7 +166,109 @@ while True:
         atck_3_t_h_disegno = atck_3.move(shake_x, shake_y)
         pygame.draw.rect(window, "red", atck_3_t_h_disegno) 
 
-    # gui
+
+
+    if sh_atc_1:  
+        atck_1.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno) 
+    if sh_atc_2:  
+        atck_2.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_3:  
+        atck_3.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_4:  
+        atck_4.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_5:  
+        atck_5.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_6:  
+        atck_6.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_v_1:  
+        atck_1_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_v_2:  
+        atck_2_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_v_3:  
+        atck_3_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_v_4:  
+        atck_4_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_v_5:  
+        atck_5_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_v_6:  
+        atck_6_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_v_7:  
+        atck_7_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_v_8:  
+        atck_8_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_v_9:  
+        atck_9_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+    if sh_atc_v_10:  
+        atck_10_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, "red", atck_3_t_h_disegno)
+
+
+    if sh_atc_h_1:  
+        atck_1.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno) 
+    if sh_atc_h_2:  
+        atck_2.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_3:  
+        atck_3.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_4:  
+        atck_4.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_5:  
+        atck_5.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_6:  
+        atck_6.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_v_1:  
+        atck_1_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_v_2:  
+        atck_2_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_v_3:  
+        atck_3_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_v_4:  
+        atck_4_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_v_5:  
+        atck_5_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_v_6:  
+        atck_6_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_v_7:  
+        atck_7_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_v_8:  
+        atck_8_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_v_9:  
+        atck_9_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    if sh_atc_h_v_10:  
+        atck_10_v.move(shake_x, shake_y)
+        pygame.draw.rect(window, (71, 27, 24), atck_3_t_h_disegno)
+    
+
+    # Interfaccia grafica (UI)
     testo_vite = font.render(f"Vite: {vite}", True, "white")
     window.blit(testo_vite, (20, 20))
 
@@ -126,65 +292,70 @@ while True:
             elif sh_atc3_t_h and player_corrente.colliderect(atck_3):
                 subisce_danno = True
 
+
+            if sh_atc_1 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_2 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_3 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_4 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_5 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_6 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_v_1 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_v_2 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_v_3 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_v_4 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_v_5 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_v_6 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_v_7 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_v_8 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_v_9 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+            if sh_atc_v_10 and player_corrente.colliderect(atck_1):
+                subisce_danno = True
+
+
         if subisce_danno:
             vite -= 1
             tempo_ultimo_danno = tempo_attuale  
-            
             if vite <= 0:
                 game_over = True
                 pygame.mixer.music.stop() 
             else:
                 forza_knockback = 50
                 if ss_l:
-                    if s_l: player.x += forza_knockback; player_l.x += forza_knockback
-                    else: player.x -= forza_knockback; player_l.x -= forza_knockback
+                    if s_l:
+                        player.x += forza_knockback; player_l.x += forza_knockback
+                    else:
+                        player.x -= forza_knockback; player_l.x -= forza_knockback
                 else:
-                    if s_u: player.y += forza_knockback; player_l.y += forza_knockback
-                    else: player.y -= forza_knockback; player_l.y -= forza_knockback
+                    if s_u:
+                        player.y += forza_knockback; player_l.y += forza_knockback
+                    else:
+                        player.y -= forza_knockback; player_l.y -= forza_knockback
 
                 if player.x < 0: player.x, player_l.x = 0, 0
                 if player.x > 1000 - 25: player.x, player_l.x = 1000 - 25, 1000 - 25
                 if player.y < 0: player.y, player_l.y = 0, 0
                 if player.y > 600 - 25: player.y, player_l.y = 600 - 25, 600 - 25
 
+    # Ciclo degli eventi di Pygame
     for event in pygame.event.get():
         if event.type == pygame.QUIT:  
             pygame.quit()
             exit()
-
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                if game_over:
-                    vite = 3
-                    game_over = False
-                    player.x, player.y = 200, 300
-                    player_l.x, player_l.y = 200, 300
-                    mostra_attacco1 = mostra_attacco2 = False
-                    sh_atc3 = sh_atc3_h = sh_atc3_t = sh_atc3_t_h = False
-                    durata_shake = 0
-                else:
-                    if not mostra_attacco1 and not mostra_attacco2 and not sh_atc3 and not sh_atc3_h and not sh_atc3_t and not sh_atc3_t_h:
-                        mostra_attacco1 = True  
-                        pygame.time.set_timer(EVENTO_CANCELLA_ATTACCO_1, 500, loops=1)
-                        pygame.mixer.music.play(loops=0, start=0.0, fade_ms=0)
-            
-            if event.key in [pygame.K_UP, pygame.K_LEFT, pygame.K_RIGHT, pygame.K_DOWN]:
-                s_done = False
-
-
-        if event.type == pygame.KEYUP and not game_over:
-            if event.key == pygame.K_UP and not s_done:
-                if player.y >= 100: player.y -= 100; player_l.y -= 100; s_done = True
-                else: player.y = 0; player_l.y = 0; s_done = True
-            elif event.key == pygame.K_LEFT and not s_done:
-                if player.x >= 100: player.x -= 100; player_l.x -= 100; s_done = True
-                else: player.x = 0; player_l.x = 0; s_done = True
-            elif event.key == pygame.K_RIGHT and not s_done:
-                if player.x + 100 <= 1000: player.x += 100; player_l.x += 100; s_done = True
-                else: player.x = 1000 - 25; player_l.x = 1000 - 25; s_done = True
-            elif event.key == pygame.K_DOWN and not s_done:
-                if player.y + 100 <= 600: player.y += 100; player_l.y += 100; s_done = True
-                else: player.y = 600 - 25; player_l.y = 600 - 25; s_done = True
 
         #the level itself
         if not game_over:
@@ -219,9 +390,78 @@ while True:
             elif event.type == evento_del_atc_3_t_h:
                 sh_atc3_t_h = False
                 mostra_attacco1 = True
+                pygame.time.set_timer(s_atc, 500, loops=1)
+
+            elif event.type == s_atc:
+                sh_atc3 = True
+                sh_atc3_t = True
+                pygame.time.set_timer(s_atc_h, 500, loops=1)
+
+            elif event.type == s_atc_h:
+                sh_atc3 = False
+                sh_atc3_t = False
+                mostra_attacco1 = False  
+                mostra_attacco2 = True
+                sh_atc3_h = True    
+                sh_atc3_t_h = True
+                durata_shake = 10
+                pygame.time.set_timer(s_atc_h_del, 700, loops=1)
+
+            elif event.type == s_atc_h_del:
+                mostra_attacco2 = False
+                sh_atc3_h = False
+                sh_atc3_t_h = False
+                pygame.time.set_timer(s_1, 700, loops=1)
+
+            elif event.type == s_1:
+                sh_atc_h_v_3 = True
+                sh_atc_h_v_4 = True
+                sh_atc_h_v_5 = True
+                sh_atc_h_v_6 = True
 
 
-    # movimenti
+        # Input pulsanti fissi (Spazio e reset)
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                if game_over:
+                    vite = 3
+                    game_over = False
+                    player.x, player.y = 200, 300
+                    player_l.x, player_l.y = 200, 300
+                    mostra_attacco1 = mostra_attacco2 = False
+                    sh_atc3 = sh_atc3_h = sh_atc3_t = sh_atc3_t_h = False
+                    durata_shake = 0
+                else:
+                    if not mostra_attacco1 and not mostra_attacco2 and not sh_atc3 and not sh_atc3_h and not sh_atc3_t and not sh_atc3_t_h:
+                        mostra_attacco1 = True  
+                        pygame.time.set_timer(EVENTO_CANCELLA_ATTACCO_1, 500, loops=1)
+                        # --- MODIFICA 1 CONTINUA: La musica viene caricata e avviata insieme qui safely ---
+                        pygame.mixer.music.load("music/Creo_Crazy.mp3")
+                        pygame.mixer.music.play(loops=0, start=0.0, fade_ms=0)
+
+            if event.key in [pygame.K_UP, pygame.K_LEFT, pygame.K_RIGHT, pygame.K_DOWN]:
+                s_done = False
+
+        # Sprint logic
+        if event.type == pygame.KEYUP and not game_over:
+            if event.key == pygame.K_UP and not s_done:
+                if player.y >= 100: player.y -= 100; player_l.y -= 100; s_done = True
+                else: player.y = 0; player_l.y = 0; s_done = True
+            elif event.key == pygame.K_LEFT and not s_done:
+                if player.x >= 100: player.x -= 100; player_l.x -= 100; s_done = True
+                else: player.x = 0; player_l.x = 0; s_done = True
+            elif event.key == pygame.K_RIGHT and not s_done:
+                if player.x + 100 <= 1000: player.x += 100; player_l.x += 100; s_done = True
+                else: player.x = 1000 - 25; player_l.x = 1000 - 25; s_done = True
+            elif event.key == pygame.K_DOWN and not s_done:
+                if player.y + 100 <= 600: player.y += 100; player_l.y += 100; s_done = True
+                else: player.y = 600 - 25; player_l.y = 600 - 25; s_done = True
+
+    if player.x > 1000:
+        player.x = 1000
+        player_l.x = 1000
+
+    # --- MOVIMENTI CONTINUI (W, A, S, D) ---
     if not game_over:
         kes = pygame.key.get_pressed()
         if kes[pygame.K_w] and (player.y - 10 >= 0):
@@ -232,7 +472,5 @@ while True:
             player_l.x -= 10; player.x -= 10; ss_l = True; ss_u = False; s_l = True
         if kes[pygame.K_d] and (player.x + 10 + 25 <= 1000):
             player_l.x += 10; player.x += 10; ss_l = True; ss_u = False; s_l = False
-
     pygame.display.update()
     clock.tick(60)  # fps
-
