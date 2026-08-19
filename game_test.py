@@ -18,6 +18,23 @@ ss_l = False #verifica che lultimo input era a o d
 ss_u = False #verifica che lultimo input era w o s
 s_done = False #verifica se il giocatore ha sprintato
 
+pointlist = [
+    (200, 0),
+    (300, 0),
+    (500, 600),
+    (400, 600),
+
+
+]
+attack1 = pygame.draw.polygon(window, ("red"), pointlist, width=0)
+
+
+
+
+
+
+
+
 
 while True:
     window.blit(bkg, (0, 0))
@@ -29,6 +46,7 @@ while True:
         if event.type == pygame.QUIT:  #press the close button
             pygame.quit()
             exit()
+
 
 
 #sprint:
